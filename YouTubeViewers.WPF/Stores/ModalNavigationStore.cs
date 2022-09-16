@@ -9,9 +9,9 @@ namespace YouTubeViewers.WPF.Stores
 {
     internal class ModalNavigationStore
     {
-		private ViewModelBase _currentViewModel;
+		private ViewModelBase? _currentViewModel;
 
-		public ViewModelBase CurrentViewModel
+		public ViewModelBase? CurrentViewModel
         {
 			get 
 			{ 
@@ -19,7 +19,7 @@ namespace YouTubeViewers.WPF.Stores
 			}
 			set 
 			{
-                _currentViewModel.Dispose();
+                _currentViewModel?.Dispose();
                 _currentViewModel = value;
 				CurrentViewModelChanged?.Invoke();
 			}
@@ -27,7 +27,11 @@ namespace YouTubeViewers.WPF.Stores
 
         public bool IsOpen => CurrentViewModel != null;
 
-        public event Action CurrentViewModelChanged;
+        public event Action? CurrentViewModelChanged;
 
+		internal void Close()
+		{
+			CurrentViewModel = null;
+		}
 	}
 }

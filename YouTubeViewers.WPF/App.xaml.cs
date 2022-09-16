@@ -5,7 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using YouTubeViewers.WPF.Models;
+using YouTubeViewers.Domain.Models;
 using YouTubeViewers.WPF.Stores;
 using YouTubeViewers.WPF.ViewModels;
 
@@ -17,16 +17,23 @@ namespace YouTubeViewers.WPF
     public partial class App : Application
     {
         private readonly SelectedYouTubeViewerStore _selectedYouTubeViewerStore;
+        private readonly YouTubeViewersStore _youTubeViewersStore;
         private readonly ModalNavigationStore _modalNavigationStore;
+
 
         public App()
         {
             _modalNavigationStore = new ModalNavigationStore();
-            _selectedYouTubeViewerStore = new SelectedYouTubeViewerStore();
+            _youTubeViewersStore = new YouTubeViewersStore();
+            _selectedYouTubeViewerStore = new SelectedYouTubeViewerStore(_youTubeViewersStore);
+            
         }
         protected override void OnStartup(StartupEventArgs e)
         {
-            YouTubeViewersViewModel youTubeViewersViewModel = new YouTubeViewersViewModel(_selectedYouTubeViewerStore);
+            YouTubeViewersViewModel youTubeViewersViewModel = new YouTubeViewersViewModel(
+                _youTubeViewersStore,
+                _selectedYouTubeViewerStore,
+                _modalNavigationStore);
             MainWindow = new MainWindow()
             {
                 DataContext = new MainViewModel(_modalNavigationStore, youTubeViewersViewModel)

@@ -4,16 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace YouTubeViewers.WPF.Models
+namespace YouTubeViewers.Domain.Models
 {
-    internal class YouTubeViewer
+    public class YouTubeViewer
     {
-        public YouTubeViewer(string username, bool isSubscribed, bool isMember)
+        public YouTubeViewer(string username, bool isSubscribed, bool isMember, Guid id)
         {
             Username = username;
             IsSubscribed = isSubscribed;
             IsMember = isMember;
+            Id = id;
         }
+        public Guid Id { get; }
+
 
         public string Username { get; }
         public bool IsSubscribed { get; }

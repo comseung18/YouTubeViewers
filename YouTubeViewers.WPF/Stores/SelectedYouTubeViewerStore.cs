@@ -3,13 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using YouTubeViewers.WPF.Models;
+using YouTubeViewers.Domain.Models;
 
 namespace YouTubeViewers.WPF.Stores
 {
     internal class SelectedYouTubeViewerStore
     {
 		private YouTubeViewer? _selectedYouTubeViewer;
+		private readonly YouTubeViewersStore _youTubeViewersStore;
+
+		public SelectedYouTubeViewerStore(YouTubeViewersStore youTubeViewersStore)
+		{
+			_youTubeViewersStore = youTubeViewersStore;
+			_youTubeViewersStore.YouTubeViewerUpdated += _youTubeViewersStore_YouTubeViewerUpdated;
+		}
+
+		private void _youTubeViewersStore_YouTubeViewerUpdated(YouTubeViewer youTubeViewer)
+		{
+			if(youTubeViewer.Id == SelectedYouTubeViewer?.Id)
+			{
+				SelectedYouTubeViewer = youTubeViewer;
+			}
+		}
 
 		public YouTubeViewer? SelectedYouTubeViewer
         {
@@ -25,7 +40,7 @@ namespace YouTubeViewers.WPF.Stores
             }
 		}
 
-		public event Action SelectedYouTubeViewerChanged;
+		public event Action? SelectedYouTubeViewerChanged;
 
 	}
 }

@@ -23,7 +23,7 @@
             <custom:Modal Panel.ZIndex="1" IsOpen="{Binding IsModalOpen}">
                 <ContentControl Margin="50 25" Content="{Binding CurrentModalViewModel}" />
             </custom:Modal>
-            <views:YouTubeViewersView DataContext="{Binding YouTubeViewersViewModel}"/>
+            <views:YouTubeViewersView DataContext="{Binding YouTubeViewersViewModel}" Margin="30"/>
         </Grid>
     </ScrollViewer>
 </Window>
